@@ -8,8 +8,9 @@ const playAgainBtn = gameModal.querySelector("button");
 // Initializing game variables
 let currentWord, correctLetters, wrongGuessCount;
 const maxGuesses = 11;
-const response = await fetch('dictionary.txt');
-const wordList = await response.text().split('\n');
+const response = await fetch("dictionary.txt");
+const text = await response.text();
+const wordList = text.split('\n');
 
 const resetGame = () => {
     // Ressetting game variables and UI elements
