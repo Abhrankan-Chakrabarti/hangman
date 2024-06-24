@@ -8,15 +8,23 @@ const playAgainBtn = gameModal.querySelector("button");
 // Initializing game variables
 let currentWord, correctLetters, wrongGuessCount;
 const maxGuesses = 11;
-const response = await fetch("dictionary.txt");
-const text = await response.text();
-const wordList = text.split('\n');
+var wordList = [];
+async function loadWords(file, sep) {
+  const response = await fetch(file);
+  const text = await response.text();
+  const words = text.split(sep);
+  for (var i = 0; i < words.length; i++) {
+    wordList.push(words[i]);
+  }
+  getRandomWord();
+}
+loadWords("dictionary.txt", /\r?\n/);
 
 const resetGame = () => {
     // Ressetting game variables and UI elements
     correctLetters = [];
     wrongGuessCount = 0;
-    hangmanImage.src = `images/hang{maxGuesses}.png`;
+    hangmanImage.src = `images/hang${maxGuesses}.png`;
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
     wordDisplay.innerHTML = currentWord.split("").map(() => `<li class="letter"></li>`).join("");
     keyboardDiv.querySelectorAll("button").forEach(btn => btn.disabled = false);
@@ -31,15 +39,16 @@ const getRandomWord = () => {
 }
 
 const gameOver = (isVictory) => {
-    // After game complete.. showing modal with relevant details
+    // After game complete... showing modal with relevant details
     const modalText = isVictory ? `You found the word:` : 'The correct word was:';
+    gameModal.querySelector("img").src = `images/${isVictory ? 'victory' : 'lost'}.gif`;
     gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!' : 'Game Over!';
     gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
     gameModal.classList.add("show");
 }
 
 const initGame = (button, clickedLetter) => {
-    // Checking if clickedLetter is exist on the currentWord
+    // Checking if clickedLetter is in the currentWord
     if(currentWord.includes(clickedLetter)) {
         // Showing all correct letters on the word display
         [...currentWord].forEach((letter, index) => {
@@ -63,12 +72,11 @@ const initGame = (button, clickedLetter) => {
 }
 
 // Creating keyboard buttons and adding event listeners
-for (let i = 97; i <= 122; i++) {
+for (let i = 65; i <= 90; i++) {
     const button = document.createElement("button");
     button.innerText = String.fromCharCode(i);
     keyboardDiv.appendChild(button);
     button.addEventListener("click", (e) => initGame(e.target, String.fromCharCode(i)));
 }
 
-getRandomWord();
 playAgainBtn.addEventListener("click", getRandomWord);
