@@ -16,7 +16,7 @@ async function loadWords(file, sep) {
   for (var i = 0; i < words.length; i++) {
     wordList.push(words[i]);
   }
-  document.querySelector(".guesses-text").innerText = 'Incorrect guesses: ';
+  document.querySelector(".guesses-text").innerHTML = 'Incorrect guesses: <b></b>';
   getRandomWord();
 }
 loadWords("dictionary.txt", /\r?\n/);
