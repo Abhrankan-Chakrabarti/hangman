@@ -5,17 +5,17 @@ class Hangman:
 
 	def __init__(self):
 
-		self.turns = 11
-		self.photos = [PhotoImage(file = f"images/hang{i}.png") for i in range(self.turns)]
+		self.total_turns = 11
+		self.photos = [PhotoImage(file = f"images/hang{i}.png") for i in range(self.total_turns + 1)]
 
 	def new_game(self):
 
-		self.turns = 11
+		self.turns = self.total_turns
 
 		with open("dictionary.txt") as f:
 
-			self.word, self.guesses, self.failed = choice(f.read().split('\n')), [], 1
-		hang["image"] = ""
+			self.word, self.guesses, self.failed = choice(f.read().upper().split('\n')), [], 1
+		self.draw_hang()
 
 		self.generate("", True, f"Guess the {len(self.word)} letter word. Good luck!", "yellow")
 
