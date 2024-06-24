@@ -7,13 +7,15 @@ const playAgainBtn = gameModal.querySelector("button");
 
 // Initializing game variables
 let currentWord, correctLetters, wrongGuessCount;
-const maxGuesses = 6;
+const maxGuesses = 11;
+const response = await fetch('dictionary.txt');
+const wordList = await response.text().split('\n');
 
 const resetGame = () => {
     // Ressetting game variables and UI elements
     correctLetters = [];
     wrongGuessCount = 0;
-    hangmanImage.src = "images/hangman-0.svg";
+    hangmanImage.src = `images/hang{maxGuesses}.png`;
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
     wordDisplay.innerHTML = currentWord.split("").map(() => `<li class="letter"></li>`).join("");
     keyboardDiv.querySelectorAll("button").forEach(btn => btn.disabled = false);
@@ -22,16 +24,14 @@ const resetGame = () => {
 
 const getRandomWord = () => {
     // Selecting a random word and hint from the wordList
-    const { word, hint } = wordList[Math.floor(Math.random() * wordList.length)];
+    const word = wordList[Math.floor(Math.random() * wordList.length)];
     currentWord = word; // Making currentWord as random word
-    document.querySelector(".hint-text b").innerText = hint;
     resetGame();
 }
 
 const gameOver = (isVictory) => {
     // After game complete.. showing modal with relevant details
     const modalText = isVictory ? `You found the word:` : 'The correct word was:';
-    gameModal.querySelector("img").src = `images/${isVictory ? 'victory' : 'lost'}.gif`;
     gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!' : 'Game Over!';
     gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
     gameModal.classList.add("show");
@@ -51,7 +51,7 @@ const initGame = (button, clickedLetter) => {
     } else {
         // If clicked letter doesn't exist then update the wrongGuessCount and hangman image
         wrongGuessCount++;
-        hangmanImage.src = `images/hangman-${wrongGuessCount}.svg`;
+        hangmanImage.src = `images/hang${maxGuesses - wrongGuessCount}.png`;
     }
     button.disabled = true; // Disabling the clicked button so user can't click again
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
