@@ -5,12 +5,12 @@ class Hangman:
 
 	def __init__(self):
 
-		self.turns = 10
+		self.turns = 11
 		self.photos = [PhotoImage(file = f"images/hang{i}.png") for i in range(self.turns)]
 
 	def new_game(self):
 
-		self.turns = 10
+		self.turns = 11
 
 		with open("dictionary.txt") as f:
 
