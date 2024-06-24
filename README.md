@@ -4,7 +4,7 @@ This repository contains multiple implementations of the classic Hangman game:
 
 - **HangmanGUI.py**: A graphical user interface version using Python and Tkinter.
 - **hangman.py**: A command-line version using Python 3.
-- **hangman-1.py**: A command-line version using Python 2.
+- **hangman_1.py**: A command-line version using Python 2.
 - **index.html**: A web-based version using HTML, CSS, and JavaScript, hosted on GitHub Pages.
 
 ## How to Play
@@ -27,7 +27,7 @@ This repository contains multiple implementations of the classic Hangman game:
 1. Ensure you have Python 2 installed.
 2. Run the game:
     ```
-    python hangman-1.py
+    python hangman_1.py
     ```
 
 ### Web Version
