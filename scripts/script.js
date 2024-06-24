@@ -1,5 +1,5 @@
 const wordDisplay = document.querySelector(".word-display");
-const guessesText = document.querySelector(".guesses-text b");
+var guessesText = document.querySelector(".guesses-text b");
 const keyboardDiv = document.querySelector(".keyboard");
 const hangmanImage = document.querySelector(".hangman-box img");
 const gameModal = document.querySelector(".game-modal");
@@ -17,6 +17,7 @@ async function loadWords(file, sep) {
     wordList.push(words[i]);
   }
   document.querySelector(".guesses-text").innerHTML = 'Incorrect guesses: <b></b>';
+  guessesText = document.querySelector(".guesses-text b");
   getRandomWord();
 }
 loadWords("dictionary.txt", /\r?\n/);
