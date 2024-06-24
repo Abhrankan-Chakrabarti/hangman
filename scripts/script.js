@@ -16,6 +16,7 @@ async function loadWords(file, sep) {
   for (var i = 0; i < words.length; i++) {
     wordList.push(words[i]);
   }
+  document.querySelector(".guesses-text").innerHTML = 'Incorrect guesses: <b></b>';
   getRandomWord();
 }
 loadWords("dictionary.txt", /\r?\n/);
@@ -40,7 +41,7 @@ const getRandomWord = () => {
 
 const gameOver = (isVictory) => {
     // After game complete... showing modal with relevant details
-    const modalText = isVictory ? `You found the word:` : 'The correct word was:';
+    const modalText = isVictory ? 'You found the word:' : 'The correct word was:';
     gameModal.querySelector("img").src = `images/${isVictory ? 'victory' : 'lost'}.gif`;
     gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!' : 'Game Over!';
     gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
